@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/shubhamgupta2901/nodejs-weather-app#readme",
   "dependencies": {
+    "chalk": "^2.4.2",
     "request": "^2.88.0"
   }
 }
