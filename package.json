@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/shubhamgupta2901/nodejs-weather-app/issues"
   },
-  "homepage": "https://github.com/shubhamgupta2901/nodejs-weather-app#readme"
+  "homepage": "https://github.com/shubhamgupta2901/nodejs-weather-app#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
 }
