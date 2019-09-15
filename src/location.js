@@ -15,20 +15,20 @@ const getMapBoxGeocodingURL = (placeName) =>{
  * The callback function has either error or response(one of them is always undefined or null).
  * For other errors like bad request etc, you get a response. Which means error is null but response.code is not 200 and response.body does not have expected response from api but an error object.
  */
-const geocode = (placeName) =>{
+const geocode = async (placeName,callback) =>{
     request({url: getMapBoxGeocodingURL(placeName), json:true},(error,response,body)=>{
         // Low level os errors, due to which could not connect with the service
         if(error){
             console.log(utils.chalkError('Error connecting to location service'));
-            return [];
+            callback([]);
         }else if(response.statusCode!==200){
             //Bad requests etc
             console.log(utils.chalkError(response.body.message));
-            return [];
+            callback([]);
         }else{
             const [longitude, latitude] = response.body.features[0].center;
             console.log(`Longitude: ${utils.chalkInfo(longitude)} & Latitude: ${utils.chalkInfo(latitude)}`);
-            return [longitude,latitude];
+            callback([longitude,latitude]);
         }
     })
 }
