@@ -9,12 +9,18 @@ const getTimefromUnixTimestamp = (unixTimestamp) => {
     return formattedTime;
 };
 
-const chalkInfo = (str) => chalk.blue.underline(str);
+const chalkInfo = (str) => chalk.blue(str);
 
-const chalkError = (str) => chalk.red.inverse(str);
+const chalkError = (str) => chalk.red(str);
+
+const printForecast = ({place, time, temperature, summary}) =>{
+    const forecast = `Location: ${place}. ${chalkInfo(summary)}. At ${chalkInfo(time)},it is currently ${chalkInfo(temperature)} degree celcius.`;
+    console.log(forecast);
+}
 
 module.exports ={
     getTimefromUnixTimestamp,
     chalkInfo,
     chalkError,
+    printForecast,
 }

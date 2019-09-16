@@ -7,25 +7,32 @@ getDarkSkyForecastURL = (longitude, latitude) => {
     return `https://api.darksky.net/forecast/${config.DARKSKY_SECRET_KEY}/${latitude},${longitude}?units=si`;
 }
 
-const printForecast = (place,currently) =>{
-    const forecast = `Location: ${place}. At ${utils.chalkInfo(utils.getTimefromUnixTimestamp(currently.time))},it is currently ${utils.chalkInfo(currently.temperature)} degree celcius. There is ${utils.chalkInfo(`${currently.precipProbability}%`)} chance of ${utils.chalkInfo(currently.precipType)}.`;
-    return forecast;
-}
-
+/**
+ * 
+ * Takes a latitude, longitude of a place name and returns the weather forecast through a callback
+ * returns a callback function with arguments (error, response). Either error will be present or response.
+ * error is a string
+ * response is an object 
+ * @param {*} location {latitude, longitude, place}
+ * @param {*} callback 
+*/
 const forecast = (location,callback) => {
-    request ({url: getDarkSkyForecastURL(location.longitude,location.latitude),json: true},(error, response)=>{
-        if(error){
-            console.log(utils.chalkError('Error connecting to forecast service'));
-            callback('');
-        }else if(response.statusCode!==200){
-            //Bad requests etc
-            console.log(utils.chalkError(response.body.message));
-            callback('');
-        }else{
-            callback(printForecast(location.place,response.body.currently));
-        }
+    request({url: getDarkSkyForecastURL(location.longitude, location.latitude), json: true},(error, response)=>{
+       if(error){
+           callback('Error connecting weather service',null);
+       }else if(response.statusCode!==200){
+           callback(`Error in Geocode Service: ${response.body.error}`,null);
+       }else{
+           const {time, temperature,summary} = response.body.currently;
+           callback(null,{ 
+               place:location.place, 
+               time: utils.getTimefromUnixTimestamp(time),
+               temperature,
+               summary,
+            });
+       }
     })
-};
+}
 module.exports = {
-    forecast,
+    forecast
 }
