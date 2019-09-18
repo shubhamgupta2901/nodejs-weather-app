@@ -5,11 +5,40 @@ console.log('Client Side javascript file');
 //To make http requests from client side javascript we are using fetch library.
 //fetch is web api (browser based), and is not accessible in nodejs. 
 
-fetch('http://localhost:3000/weather?address=Bangalore')
-.then(response => response.json())
-.then((responseJson)=>{
-    console.log(responseJson);
-})
-.catch((error)=>{
-    console.log(error);
+
+
+const weatherForm = document.querySelector('form');
+const searchInput = document.querySelector('input');
+const messageOne = document.querySelector('#message-1');
+const messageTwo = document.querySelector('#message-2');
+
+weatherForm.addEventListener('submit',(event)=>{
+    event.preventDefault();
+    
+    const searchQuery = searchInput.value;
+    if(!searchQuery){
+        console.log('Empty Search Query');
+        return;
+    }   
+    messageOne.textContent = '';
+    messageTwo.textContent = 'Loading';
+
+    fetch(`http://localhost:3000/weather?address=${searchQuery}`)
+    .then(response => response.json())
+    .then((responseJson)=>{
+
+        if(responseJson.error){
+            messageOne.textContent = `Error`;
+            messageTwo.textContent =responseJson.error;
+            return;
+        }
+        console.log(responseJson);
+        messageOne.textContent = `Location: ${responseJson.place}`;
+        messageTwo.textContent =`Temperature: ${responseJson.temperature} °C. Forecast: ${responseJson.summary} `;
+    })
+    .catch((error)=>{
+        console.log(error);
+        messageOne.textContent =error;
+        messageTwo.textContent ='';
+    })
 })
