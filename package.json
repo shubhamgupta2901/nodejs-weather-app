@@ -21,6 +21,7 @@
   "homepage": "https://github.com/shubhamgupta2901/nodejs-weather-app#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "hbs": "^4.0.4",
     "request": "^2.88.0"
   }
 }
