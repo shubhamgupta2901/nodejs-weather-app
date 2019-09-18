@@ -1,5 +1,5 @@
 const request = require('request');
-const config = require('../config.js');
+const config = require('./config.js');
 
 const getMapBoxGeocodingURL = (placeName) =>{
     return `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(placeName)}.json?access_token=${config.MAPBOX_ACCESS_TOKEN}&limit=1`;

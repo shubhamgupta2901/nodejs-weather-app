@@ -1,6 +1,6 @@
 const request = require('request');
 const utils = require('./utils');
-const config = require('../config');
+const config = require('./config');
 
 
 getDarkSkyForecastURL = (longitude, latitude) => {
