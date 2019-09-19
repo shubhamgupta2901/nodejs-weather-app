@@ -5,6 +5,8 @@ const path = require('path');
 const hbs = require('hbs');
 
 const app = express();
+//dynamic port that will be provided by heroku. Reading it from process object. This only works on heroku and fails on local so we specify our own as well for local host.
+const port = process.env.PORT || 3000;
 
 //Note that the path of directory currently is src/app.js inside our project.
 const publicDirectoryPath = path.join(__dirname,'../public');
@@ -76,6 +78,6 @@ app.get('*',(req,res)=>{
     });
 })
 
-app.listen(3000,()=>{
-    console.log('Server is up on port 3000');
+app.listen(port,()=>{
+    console.log(`Server is up on port ${port}`);
 })
